@@ -25,7 +25,6 @@ public class GameSceneManager : MonoBehaviour
     {
         //Getting the duration of the song
         audioClipLength = AudioManager.instance.musicTheme.clip.length;
-        Debug.Log(audioClipLength);
 
         //Starting the countdown with song
         StartCoroutine(StartCountdown(audioClipLength));
@@ -81,5 +80,9 @@ public class GameSceneManager : MonoBehaviour
         return timeText;
     }
 
+    public void BackToLobbyScene()
+    {
+        SceneLoader.instance.LoadScene("Lobby scene");
+    }
   
 }

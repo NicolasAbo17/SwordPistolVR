@@ -16,9 +16,20 @@ public class CubeExplode : MonoBehaviour
 
     public void IsShot()
     {
+        CubePhysics cubeP = gameObject.GetComponent<CubePhysics>();
+        if (cubeP != null)
+        {
+            cubeP.failed = false;
+        }
+        cubeP = shatteredObject.GetComponent<CubePhysics>();
+        if (cubeP != null)
+        {
+            cubeP.failed = false;
+        }
+
         Destroy(mainCube);
         shatteredObject.SetActive(true);
-        var shatterAnimation = shatteredObject.GetComponent<Animation>().Play();
+        shatteredObject.GetComponent<Animation>().Play();
 
         //Vibrate controller
         VibrationManager.instance.VibrateController(0.4f, 1, 0.3f, OVRInput.Controller.RTouch);

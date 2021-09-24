@@ -82,5 +82,7 @@ public class ScoreManager : MonoBehaviour
         {
             currentMultiplier = currentMultiplier / 2;
         }
+        currentMultiplierText.text = "X" + currentMultiplier;
+
     }
 }

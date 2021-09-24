@@ -10,32 +10,48 @@ public class Slicer : MonoBehaviour
     public bool isTouched;
 
     private void Update()
-    {     
+    {
         if (isTouched == true)
         {
             isTouched = false;
             Collider[] objectsToBeSliced = Physics.OverlapBox(transform.position, new Vector3(1, 0.1f, 0.1f), transform.rotation, sliceMask);
             foreach (Collider objectToBeSliced in objectsToBeSliced)
             {
-              
+                CubePhysics cubeP = objectToBeSliced.GetComponent<CubePhysics>();
+                if (cubeP != null)
+                {
+                    cubeP.failed = false;
+                }
+
                 SlicedHull slicedObject = SliceObject(objectToBeSliced.gameObject, MaterialAfterSlice);
 
                 GameObject upperHullGameobject = slicedObject.CreateUpperHull(objectToBeSliced.gameObject, MaterialAfterSlice);
+                cubeP = upperHullGameobject.GetComponent<CubePhysics>();
+                if (cubeP != null)
+                {
+                    cubeP.failed = false;
+                }
                 GameObject lowerHullGameobject = slicedObject.CreateLowerHull(objectToBeSliced.gameObject, MaterialAfterSlice);
+                cubeP = lowerHullGameobject.GetComponent<CubePhysics>();
+                if (cubeP != null)
+                {
+                    cubeP.failed = false;
+                }
 
                 //Play slice sound
                 AudioManager.instance.sliceSound.gameObject.transform.position = objectToBeSliced.transform.position;
                 AudioManager.instance.sliceSound.Play();
 
                 //Starts the vibration
-                VibrationManager.instance.VibrateController(0.4f, 1, 0.3f, OVRInput.Controller.LTouch);
+                VibrationManager.instance.VibrateController(0.4f, 1, 0.3f, OVRInput.Controller.RTouch);
 
-                //Add Score
+                //Add score
                 ScoreManager.instance.AddScore(ScorePoints.SWORDCUBE_SCOREPOINT);
+
 
                 upperHullGameobject.transform.position = objectToBeSliced.transform.position;
                 lowerHullGameobject.transform.position = objectToBeSliced.transform.position;
-               
+
 
                 MakeItPhysical(upperHullGameobject, objectToBeSliced.gameObject.GetComponent<Rigidbody>().velocity);
                 MakeItPhysical(lowerHullGameobject, objectToBeSliced.gameObject.GetComponent<Rigidbody>().velocity);
@@ -51,16 +67,16 @@ public class Slicer : MonoBehaviour
         obj.AddComponent<Rigidbody>();
         obj.GetComponent<Rigidbody>().velocity = -_velocity;
 
-        int randomNumberX = Random.Range(0,2);
+        int randomNumberX = Random.Range(0, 2);
         int randomNumberY = Random.Range(0, 2);
         int randomNumberZ = Random.Range(0, 2);
 
-        obj.GetComponent<Rigidbody>().AddForce(3*new Vector3(randomNumberX,randomNumberY,randomNumberZ),ForceMode.Impulse);       
+        obj.GetComponent<Rigidbody>().AddForce(3 * new Vector3(randomNumberX, randomNumberY, randomNumberZ), ForceMode.Impulse);
         obj.AddComponent<DestroyAfterSeconds>();
 
     }
 
-   
+
 
     private SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial = null)
     {

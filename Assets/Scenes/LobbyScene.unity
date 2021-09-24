@@ -1881,6 +1881,7 @@ MonoBehaviour:
   gunSound: {fileID: 0}
   musicTheme: {fileID: 6840184593985280728}
   buttonClickSound: {fileID: 784211282}
+  errorSound: {fileID: 0}
 --- !u!4 &1442044316
 Transform:
   m_ObjectHideFlags: 0
@@ -2254,7 +2255,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635650284}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.5537167, y: -2.5739808, z: 0.43920466}
+  m_LocalPosition: {x: -7.555, y: -2.57, z: 0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 706265213}
